@@ -42,14 +42,32 @@ const bubleSort = nums => {
     return nums;
 }
 // 快速排序
-const partion = nums => {
-
+const partion = (nums, left, right) => {
+    const key = nums[left];
+    while (left < right) {
+        while (left < right && nums[right] >= key) {
+            right--;
+        }
+        if (left < right) {
+            nums[left] = nums[right];
+        }
+        while (left < right && nums[left] <= key) {
+            left++;
+        }
+        if (left < right) {
+            nums[right] = nums[left];
+        }
+    }
+    nums[left] = key;
+    return left;
 }
 
-const quickSort = nums => {
-    const idx = partion(nums);
-    quickSort(nums, 0, idx)
-    return nums;
+const quickSort = (nums, left, right) => {
+    if (left < right) {
+        const part = partion(nums, left, right);
+        quickSort(nums, left, part - 1);
+        quickSort(nums, part + 1, right);
+    }
 }
 
 // 归并排序

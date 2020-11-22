@@ -37,4 +37,37 @@ const selectSort = (nums) => {
     return nums;
 }
 
-console.log(selectSort([2,5,1,512,324,3465,3423,4,123,12,3,1254,32,5,34]));
+const partion = (nums, left, right) => {
+    const key = nums[left];
+    while (left < right) {
+        while (left < right && nums[right] >= key) {
+            right--;
+        }
+        if (left < right) {
+            nums[left] = nums[right];
+        }
+        while (left < right && nums[left] <= key) {
+            left++;
+        }
+        if (left < right) {
+            nums[right] = nums[left];
+        }
+    }
+    nums[left] = key;
+    return left;
+}
+
+const quickSort = (nums, left, right) => {
+    if (left < right) {
+        const part = partion(nums, left, right);
+        quickSort(nums, left, part - 1);
+        quickSort(nums, part + 1, right);
+    }
+}
+
+const quickSortDemo = nums => {
+    quickSort(nums, 0, nums.length - 1);
+    return nums;
+}
+
+console.log(quickSortDemo([2, 5, 1, 512, 324, 3465, 3423, 4, 123, 12, 3, 1254, 32, 5, 34]));
